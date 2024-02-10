@@ -1,0 +1,129 @@
+About this keyword --> so bacically  this keyword is somthing we uses often if we are programmer 
+
+
+A function's this keyword behaves a little differently in JavaScript compared to other languages. It also has some differences between strict mode and non-strict mode.
+
+In most cases, the value of this is determined by how a function is called (runtime binding). It can't be set by assignment during execution, and it may be different each time the function is called. The Function.prototype.bind() method can set the value of a function's this regardless of how it's called, and arrow functions don't provide their own this binding (it retains the this value of the enclosing lexical context).
+
+Try it
+
+how it behaves in different situations -:
+
+1 in Node.js 
+>if we are not using strict keyword (not programming strictly)
+
+--- console.log(this) // output {}
+
+--function--- function checkThis() {
+    console.log(this) // output global object --> now what is global obj, we can say it's somthing that contains functions like 
+ }                     // setTimeOut(){} and setInterval(){} and  functionlike that basically the functions Node.js has 
+
+checkThis()
+
+--------Note-------
+
+--in object methoed --- 
+let checkThis = {
+      name: "me"
+      surname: "boy"
+
+      fun1: function() {
+       console.log(this);
+     } 
+}
+checkThis.fun1(); // output is the reference of object itself 
+
+----------note--------  we can access any property by that method we declared above somthing like this.name //output me
+
+--inside the nested object methoe --- 
+let checkThis = {
+      name: "me"
+      surname: "boy"
+
+      fun2: function() {
+        function myfun3(){
+            console.log(this)
+        }
+        myfun3();
+     } 
+}
+
+checkThis.fun2(); // again global obj 
+
+
+
+---note--- we are not using strict keyword means we are not programmer strictly
+
+
+
+---now let's use strict keyword
+
+'use strict'
+
+--- console.log(this) // output {}
+
+
+--function--- function checkThis() {
+    console.log(this) // output undefined 
+}
+
+
+--in object methoed --- 
+let checkThis = {
+      name: "me"
+      surname: "boy"
+
+      fun1: function() {
+       console.log(this);
+     } 
+}
+checkThis.fun1(); // output is the reference of object itself 
+
+
+let checkThis = {
+      name: "me"
+      surname: "boy"
+
+      fun2: function() {
+        function myfun3(){
+            console.log(this)
+        }
+        myfun3();
+     } 
+}
+
+checkThis.fun2(); // output undefined 
+
+---- This all for Node.js total 8 experiment 4 without strict keyword and 4 with strict
+ 
+
+---- now let's move to the browser
+
+-- without using strict
+
+---note--- we are not writing the same code again and again for not making complex so we are just  gonna use the code above us
+
+console.log(this) // output window object --> it is holds the browser function
+ 
+checkThis() // again the output is window object
+
+checkThis.fun1(); // reference of object itself --> we know what we are talking about
+
+checkThis.fun2(); // and again window obj
+
+
+
+--- now let's start using the strict keyword
+
+console.log(this) // output window object --> it is holds the browser function
+ 
+checkThis() // output  undefined
+
+checkThis.fun1(); // reference of object itself --> we know what we are talking about
+
+checkThis.fun2(); // and undefined
+
+
+
+
+--Now i am assumiing now i am assuming we are not gonna have problem working with this keyword

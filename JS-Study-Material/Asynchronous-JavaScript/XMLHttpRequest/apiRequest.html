@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XMLHttpRequest</title>
+</head>
+
+<body>
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            background-color: #444444;
+        }
+
+        .user-name {
+            font-size: 2rem;
+            color: #fff;
+        }
+    </style>
+
+    <h1 class="user-name">Welcome</h1>
+
+
+    <script>
+
+        const getTodos = (resource, callback) => {
+
+            const xhr = new XMLHttpRequest();
+
+            xhr.addEventListener('readystatechange', () => {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    callback(undefined, JSON.parse(xhr.responseText));
+                } else if (xhr.readyState === 4) {
+                    callback('could not fetch the data', undefined);
+                }
+            });
+
+
+            xhr.open('GET', resource);
+
+            xhr.send();
+
+        }
+
+
+             getTodos((err, data) => {
+                 if (err) {
+                     console.log(err);
+                 } else {
+                     console.log(data);
+                     document.querySelector(".user-name").textContent = data.name;
+     
+                 }
+             })
+
+        // or
+
+        xhr.onreadystatechange = function () {
+                console.log(xhr.readyState);
+                if (xhr.readyState === 4) {
+                    const data = JSON.parse(this.response);
+                    let userName = document.querySelector(".name");
+                    userName.textContent = data.name;
+                   
+                }
+            } 
+
+
+        getTodos('todos/kart.json', (err, data) => {
+            console.log(data);
+            getTodos('todos/kaush.json', (err, data) => {
+                console.log(data);
+
+            })
+        })
+
+    </script>
+</body>
+
+</html>
