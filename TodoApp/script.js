@@ -28,7 +28,8 @@ taskList.addEventListener("click", (e) => {
     }
 
     if (e.target.tagName == "SPAN") {
-        e.target.parentElement.remove();
+        const li = e.target.parentElement;
+        li.remove();
         saveListData();
     }
 });
