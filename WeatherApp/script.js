@@ -38,6 +38,7 @@ const bgImage = document.querySelector('.weather-image')
 const weatherText = document.querySelector('.weather-info-text')
 const cityName = document.querySelector('.city-name')
 const temp = document.querySelector('.temp')
+const getLocation = document.querySelector('.get-location-btn')
 
 
 
@@ -70,6 +71,37 @@ buttom.addEventListener("click", async () => {
   bgImage.setAttribute('src', result.current.condition.icon);
 })
 
+
+async function getData(lat, long) {
+  const response = await fetch(`http://api.weatherapi.com/v1/current.json?key=d671418a2db94507944113355242202&q=${lat},${long}&aqi=yes`);
+  const data = await response.json();
+  return data
+
+}
+
+async function getTheLocation(position) {
+  const result = await getData(position.coords.latitude, position.coords.longitude)
+  console.log(result);
+
+  cityName.textContent = `${result.location.name}, ${result.location.region}, ${result.location.country}`
+
+  temp.classList.add("show")
+  temp.textContent = `${result.current.temp_c} °C`
+
+  weatherText.textContent = `${result.current.condition.text}`
+
+  bgImage.classList.add("show")
+
+  bgImage.setAttribute('src', result.current.condition.icon);
+}
+
+
+getLocation.addEventListener('click',  async () => {
+   navigator.geolocation.getCurrentPosition(getTheLocation)
+
+  
+
+})
 
 
 
